@@ -1,5 +1,7 @@
-# MauMauSource
+# MauMau Source
 Source code for http://cucko.github.io/MauMau/
+
+Implementation of simple cards game Mau Mau written in ReactJs and dotnet core.
 
 Run **'dotnet build'** root folder, to build the solution and get npm dependencies.
 
