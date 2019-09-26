@@ -9,7 +9,7 @@ After build run **'dotnet run'**, to start the dotnet core server and react SPA 
 
 View app on http://localhost:5000
 
-- **Test Deck** - generates, shuffle, and renders all cards in deck with some nice animation
+- **Test Deck** - generates, shuffle, and renders all cards in deck with a nice animation
 
 - **Basic Demo** - runs the game with 4 human players, Start **Manual** or **Automatic** game, for manual **1 turn** makes one turn for the current player (if the player has a card to play he burns it, else he draw new from the stack), **AutoPlay** will automatically do turns after initial 2 sec delay. Delay can be changed.
 
