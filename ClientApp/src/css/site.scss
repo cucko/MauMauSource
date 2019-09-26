@@ -1,0 +1,619 @@
+$header-height: 64px;
+$primary-dark: #01579b;
+$primary: #0277bd;
+$primary-light: #4fc3f7;
+$text-color: #fff;
+$accent-color: #ffc107;
+$accent-color-light: #ffeb3b;
+$accent-text-color: #111;
+$player-padding: 32px;
+
+body {
+  background: $primary-dark;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: $primary;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+%center-horizontal {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+*[hidden] {
+  display: none;
+}
+
+header {
+  background: $primary-dark;
+  height: $header-height;
+  position: relative;
+  box-shadow: 0 2px 7px 3px rgba(0, 0, 0, 0.3);
+  color: $text-color;
+  display: flex;
+  flex-grow: 0;
+  align-items: center;
+  padding: 0.5em 1em;
+  box-sizing: border-box;
+  z-index: 10;
+
+  h1 {
+    font-size: 2em;
+    cursor: pointer;
+    text-transform: capitalize;
+    svg {
+      width: 36px;
+      fill: #fff;
+      margin-bottom: -6px;
+      margin-right: 8px;
+    }
+  }
+  .actions {
+    position: absolute;
+    top: 8px;
+    @extend %center-horizontal;
+    .autoPlayOptions {
+      max-width: 30vw;
+      margin-top: 2em;
+      text-align: center;
+      color: $text-color;
+      font-size: 0.8em;
+      input {
+        width: 100%;
+      }
+    }
+  }
+}
+
+#game,
+#home,
+.deck-test,
+#game-simple {
+  background: radial-gradient($primary-light, $primary-dark);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.intro-cards {
+  margin-top: 4em;
+  .deck-card {
+    margin: 0.5em -4em;
+    transform-origin: center 850px;
+    pointer-events: all;
+  }
+}
+
+#game {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  width: 100%;
+  bottom: 0;
+  &.play .autoPlayOptions {
+    margin-top: 72px;
+  }
+
+  #error {
+    color: $accent-color;
+    font-size: 1.5em;
+    font-weight: 500;
+    position: absolute;
+    @extend %center-horizontal;
+    bottom: 64px;
+  }
+}
+
+#game-table {
+  flex-grow: 1;
+  position: relative;
+
+  h1,
+  h5,
+  h3 {
+    text-align: center;
+    color: $text-color;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  }
+  h1 {
+    margin-top: 128px;
+    font-size: 4em;
+    margin-bottom: 0em;
+  }
+
+  .button-group {
+    text-align: center;
+    button,
+    a {
+      min-width: 160px;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      font-weight: 500;
+    }
+  }
+
+  &.loading {
+    * {
+      pointer-events: none !important;
+    }
+    .progress {
+      display: block;
+    }
+  }
+  .progress {
+    position: absolute;
+    top: 80px;
+    @extend %center-horizontal;
+    color: $text-color;
+    text-align: center;
+    display: none;
+    svg {
+      display: block;
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
+
+button,
+a {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: inline-block;
+  box-sizing: border-box;
+  font: 400 13.3333px Arial;
+  text-decoration: none;
+  color: $accent-text-color;
+  font-size: 18px;
+  background: $accent-color;
+  margin: 0.25em;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  will-change: background-color;
+
+  &:hover,
+  &:focus {
+    background: $accent-color-light;
+    outline-color: transparent;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    background: #fbc02d;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.05s ease-in-out, box-shadow 0.05s ease-in-out;
+  }
+}
+
+.actions {
+  text-align: center;
+}
+
+.deck-card {
+  margin: 0.5%;
+  border-radius: 5px;
+  background: #fff;
+  border: 1px solid #ccc;
+  display: inline-block;
+  width: 128px;
+  pointer-events: none;
+  max-width: 23%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease-out;
+  will-change: transform, box-shadow, background-color;
+  cursor: pointer;
+
+  text {
+    user-select: none;
+  }
+}
+
+.deck-test {
+  padding: 16px;
+  display: block;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  top: $header-height;
+  overflow: auto;
+  flex-wrap: wrap;
+
+  .deck-card {
+    width: 104px;
+    transition: transform 1s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    opacity 1s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+      background-color 0.5s ease-in-out;
+    background-color: #ccc;
+    pointer-events: all;
+    max-width: 23%;
+    margin: 0.75%;
+    opacity:0;
+    display: inline-block;
+    cursor: default;
+
+    &:hover,
+    &.hover {
+      background-color: #fff;
+      transition: transform 0.6s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+      opacity .1s cubic-bezier(0.455, 0.03, 0.515, 0.955),
+      background-color 0.5s ease-in-out;
+
+      transform: scale(1.12);
+      pointer-events: all;
+      opacity: 1;
+    }
+  }
+}
+
+.draw-stack .deck-card,
+.burned-stack .deck-card {
+  max-width: 52%;
+  transition: transform 0.15s ease-in-out;
+}
+
+.player,
+.draw-stack,
+.burned-stack {
+  position: absolute;
+  width: 40%;
+  max-width: 400px;
+  align-items: center;
+}
+
+.player {
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.4);
+  .header {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px;
+    font-weight: 500;
+    text-align: center;
+    color: $text-color;
+    will-change: background-color, color;
+    transition:background-color 0.15s ease-in-out;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+  .warning {
+    background: $accent-color;
+    color: $accent-text-color;
+    font-weight: 500;
+    text-align: center;
+    padding: 0.25em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  &.success {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    padding-bottom: 16px;
+    margin-top: -10px;
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.6);
+    &:before {
+      text-align: center;
+      content: "🏆";
+      display: block;
+      padding: 16px;
+      position: relative;
+      font-size: 128px;
+    }
+  }
+  .cards {
+    padding: 5px;
+  }
+  &.selected {
+    // border-color: $accent-color;
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.3);
+    .header {
+      background: $accent-color;
+      color: $accent-text-color;
+      font-weight: 700;
+      /* background: rgba(255, 255, 255, 0.4); */
+    }
+    .deck-card {
+      pointer-events: initial;
+    }
+  }
+  .deck-card.disabled {
+    cursor: default;
+    opacity: 0.7;
+    transform: scale(0.8);
+    pointer-events: none;
+  }
+
+  .deck-card:hover {
+    transition: transform 0.05s ease-out;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.draw-stack,
+.burned-stack {
+  left: 50%;
+  width: 25%;
+  top: 50%;
+  text-align: center;
+  transition: transform 0.15s ease-in-out;
+  font-weight: 700;
+  label {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 0.9em;
+  }
+  svg {
+    will-change: transform;
+  }
+  div {
+    color: $text-color;
+    transition: transform 0.15s ease-in-out;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+  &.selected {
+    div {
+      transform: translateY(-10px);
+    }
+    .deck-card {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.draw-stack {
+  transform: translateX(-105%) translateY(-50%);
+  text-align: right;
+}
+
+.burned-stack {
+  transform: translateX(5%) translateY(-50%);
+  text-align: left;
+}
+
+.draw-stack .deck-card {
+  pointer-events: all;
+}
+
+.player-0 {
+  top: $player-padding;
+  left: $player-padding;
+}
+
+.player-3 {
+  top: $player-padding;
+  right: $player-padding;
+}
+
+.player-1 {
+  bottom: $player-padding;
+  left: $player-padding;
+}
+
+.player-2 {
+  bottom: $player-padding;
+  right: $player-padding;
+}
+
+#log {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  position: fixed;
+  height: $header-height;
+  top: 0;
+  z-index: 11;
+  overflow: hidden;
+  overflow-y: auto;
+  font-size: 0.8em;
+  line-height: 1.5;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  text-transform: capitalize;
+  scroll-behavior: smooth;
+  right: 0;
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: $primary-light;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $primary-dark;
+    &:hover {
+      background-color: $primary;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 2px;
+  }
+
+  small {
+    display: inline-block;
+    margin-right: 8px;
+  }
+  .drew {
+    color: #900;
+  }
+  .burned {
+    color: $accent-text-color;
+  }
+  .won-with {
+    background-color: $accent-color;
+  }
+  .has-only-one-card-left {
+    color: $primary;
+  }
+}
+
+#game-simple {
+  .game-status {
+    position: relative;
+    text-align: center;
+    bottom: auto;
+    margin-top: 32px;
+    font-size: 2em;
+    .cards-status {
+      display: none;
+    }
+  }
+  #error {
+    color: $accent-color;
+    font-size: 1.5em;
+    font-weight: 500;
+    position: absolute;
+    @extend %center-horizontal;
+    bottom: 0px;
+  }
+  header {
+    .actions {
+      top: 8px;
+      display: flex;
+      > div {
+        display: inline-block;
+      }
+    }
+    .autoPlayOptions {
+      top: 0;
+      left: 100%;
+      width: 160px;
+      position: absolute;
+      margin-top: 0;
+      margin-left: 16px;
+    }
+    .autoPlayValue {
+      margin-top: 8px;
+    }
+  }
+  #game-table {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 90vh;
+  }
+  #log {
+    position: relative;
+    width: 500px;
+    max-width: 90%;
+    min-height: 300px;
+    height: 70%;
+    margin: 32px auto;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+}
+
+.game-status {
+  position: absolute;
+  text-align: center;
+  bottom: 12px;
+  @extend %center-horizontal;
+  color: $text-color;
+}
+.cards-status {
+  font-size: 0.8em;
+  color: $text-color;
+}
+
+@media only screen and (max-width: 800px) {
+  $player-padding: 8px;
+
+  .player {
+    width: 45%;
+    &.success {
+      font-size: 14px;
+      &:before {
+        font-size: 40px;
+      }
+    }
+  }
+
+  header h1 span {
+    display: none;
+  }
+
+  .draw-stack,
+  .burned-stack {
+    width: 45%;
+    top: 53%;
+  }
+
+  .deck-card {
+    max-width: 22%;
+  }
+
+  .player-0 {
+    top: $player-padding;
+    left: $player-padding;
+  }
+
+  .player-3 {
+    top: $player-padding;
+    right: $player-padding;
+  }
+
+  .player-1 {
+    bottom: $player-padding;
+    left: $player-padding;
+  }
+
+  .player-2 {
+    bottom: $player-padding;
+    right: $player-padding;
+  }
+
+  header .actions,
+  #game-simple header .actions {
+    position: initial;
+    margin-left: auto;
+    transform: none;
+    top: 0;
+    button {
+      font-size: 1em;
+      height: 44px;
+    }
+  }
+
+  .deck-test .deck-card {
+    max-width: 22%;
+  }
+
+  #game-table .progress {
+    top: 52px;
+  }
+
+  #game-simple .game-status {
+    bottom: auto;
+    top: 8px;
+    margin-top: 8px;
+  }
+
+  #game,
+  #game-cpu {
+    .game-status {
+      display: none;
+    }
+  }
+
+  #game #log,
+  .autoPlayOptions,
+  #game-simple header .actions .autoPlayOptions,
+  .cards-status {
+    display: none;
+  }
+
+  
+}

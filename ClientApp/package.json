@@ -1,0 +1,60 @@
+{
+  "name": "maumau.reactjs",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://cucko.github.io/MauMau",
+  "dependencies": {
+    "@firebase/database": "0.5.4",
+    "firebase": "6.6.2",
+    "firebase-app": "0.0.1",
+    "node-sass": "4.12.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-ga": "^2.6.0",
+    "react-router-dom": "5.1.0",
+    "react-scripts": "3.1.2",
+    "rimraf": "3.0.0",
+    "thunk": "0.0.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "4.1.0",
+    "@testing-library/react": "9.1.4",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.7",
+    "@types/react": "16.9.3",
+    "@types/react-dom": "16.9.1",
+    "@types/react-router": "5.0.5",
+    "@types/react-router-dom": "4.3.5",
+    "@typescript-eslint/eslint-plugin": "2.3.1",
+    "@typescript-eslint/parser": "2.3.1",
+    "ajv": "^6.10.2",
+    "chalk": "^2.4.2",
+    "cross-env": "^6.0.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-config-react-app": "^5.0.2",
+    "gh-pages": "^2.1.1",
+    "jest-teamcity-reporter": "git+https://github.com/mhodgson/jest-teamcity-reporter",
+    "typescript": "^3.6.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "scripts": {
+    "start": "rimraf ./build && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "test-ci": "cross-env TEAMCITY_VERSION=1 CI=true react-scripts test --env=jsdom --reporters=jest-teamcity-reporter",
+    "eject": "react-scripts eject",
+    "lint": "node ./node_modules/eslint/bin/eslint.js --config .eslintrc.json --ext .js,.ts,.tsx src",
+    "lint-ci": "node ./node_modules/eslint/bin/eslint.js --config .eslintrc.json --ext .js,.ts,.tsx --format node_modules/eslint-teamcity/index.js src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
